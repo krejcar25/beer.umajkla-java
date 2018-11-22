@@ -1,0 +1,3 @@
+[submodule "lib/processing"]
+	path = lib/processing
+	url = ssh://git@github.com/krejcar25/processing.git

@@ -36,6 +36,16 @@
             <artifactId>commons-cli</artifactId>
             <version>1.4</version>
         </dependency>
+        <!--<dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>11.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>11.0.1</version>
+        </dependency>-->
     </dependencies>
-    
+
 </project>

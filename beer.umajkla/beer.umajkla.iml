@@ -9,9 +9,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="10" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="core" level="project" />
+    <orderEntry type="library" name="library" level="project" />
+    <orderEntry type="library" name="apple" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
+    <orderEntry type="library" name="jfxrt" level="project" />
   </component>
 </module>
