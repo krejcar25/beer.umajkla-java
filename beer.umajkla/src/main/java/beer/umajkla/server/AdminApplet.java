@@ -4,12 +4,14 @@ import beer.umajkla.ui.Applet;
 import processing.event.MouseEvent;
 
 public class AdminApplet extends Applet {
+
     public void settings() {
         fullScreen();
     }
 
     public void setup() {
         init();
+        stack.push(new ConnectionsView(this));
     }
 
     public void draw() {
@@ -42,5 +44,17 @@ public class AdminApplet extends Applet {
 
     protected void keyUp(char key, int keyCode) {
 
+    }
+
+    public void run() {
+        main("beer.umajkla.server.AdminApplet");
+    }
+
+    public void exitActual() {
+        try {
+            closeWindow();
+        } catch (SecurityException e) {
+            // We still don't care
+        }
     }
 }

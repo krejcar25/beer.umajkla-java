@@ -51,6 +51,7 @@ public final class Server implements Runnable {
     private ServerThread findClient(String ID) {
         return findClient(UUID.fromString(ID));
     }
+
     private ServerThread findClient(UUID ID) {
         for (int i = 0; i < clients.size(); i++)
             if (clients.get(i).getID() == ID)
@@ -68,39 +69,51 @@ public final class Server implements Runnable {
     public synchronized void handle(UUID ID, String input) {
         String[] parts = input.split(" ", 2);
         ServerThread thread = findClient(ID);
-        switch (parts[0]) {
-            case "/bye":
-                thread.send("/bye");
-                remove(ID);
-                break;
-            case "/tell":
-                String[] cmd = parts[1].split(" ", 2);
-                try {
-                    ServerThread target = findClient(cmd[0]);
-                    if (target != null) target.send(cmd[1]);
-                    else thread.send("Client " + cmd[0] + " could not be found");
-                } catch (NumberFormatException e) {
-                    thread.send("" + cmd[0] + " is not a valid desktop id");
-                }
-                break;
-            case "/kick":
-                if (thread.isConsole()) {
+        if (parts[0].startsWith("/")) {
+            switch (parts[0]) {
+                case "/bye":
+                    thread.send("/bye");
+                    remove(ID);
+                    break;
+                case "/tell":
+                    String[] cmd = parts[1].split(" ", 2);
                     try {
-                        ServerThread target = findClient(parts[1]);
-                        if (target != null) {
-                            target.send("/bye");
-                            remove(target.getID());
-                        } else thread.send("Client " + parts[1] + " could not be found");
-                    } catch (NumberFormatException ex) {
-                        thread.send(parts[1] + " is not a valid client id");
+                        ServerThread target = findClient(cmd[0]);
+                        if (target != null) target.send(cmd[1]);
+                        else thread.send("Client " + cmd[0] + " could not be found");
+                    } catch (NumberFormatException e) {
+                        thread.send("" + cmd[0] + " is not a valid desktop id");
                     }
-                } else {
-                    thread.send("You are not a console and cannot use this command");
-                }
-                break;
-            case "/broadcast":
-            default:
-                for (ServerThread client : clients) client.send(ID + ": " + input);
+                    break;
+                case "/kick":
+                    if (thread.isConsole()) {
+                        try {
+                            ServerThread target = findClient(parts[1]);
+                            if (target != null) {
+                                target.send("/bye");
+                                remove(target.getID());
+                            } else thread.send("Client " + parts[1] + " could not be found");
+                        } catch (NumberFormatException ex) {
+                            thread.send(parts[1] + " is not a valid client id");
+                        }
+                    } else {
+                        thread.send("You are not a console and cannot use this command");
+                    }
+                    break;
+                case "/gui":
+                    if (thread.isConsole()) {
+                        AppletThread appThread = new AppletThread("beer.umajkla.server.AdminApplet");
+                        appThread.start();
+                    }
+                    break;
+                case "/broadcast":
+                    for (ServerThread client : clients) client.send(ID + ": " + parts[1]);
+                    break;
+                default:
+                    thread.send("This command could not be understood");
+            }
+        } else {
+            for (ServerThread client : clients) client.send(ID + ": " + input);
         }
     }
 
