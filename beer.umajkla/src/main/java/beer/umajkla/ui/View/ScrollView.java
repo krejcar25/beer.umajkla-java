@@ -4,6 +4,7 @@ import beer.umajkla.ui.Applet;
 import processing.core.*;
 import beer.umajkla.ui.style.*;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class ScrollView extends BaseView {
     protected PGraphics content;
 
@@ -27,6 +28,7 @@ public abstract class ScrollView extends BaseView {
         super(parent, sizex, sizey);
     }
 
+    @Override
     public void update() {
         boolean showH = horizontalScrollBarVisibility.showScrollBar(width, content.width);
         boolean showV = verticalScrollBarVisibility.showScrollBar(height, content.height);
@@ -60,6 +62,7 @@ public abstract class ScrollView extends BaseView {
         endDraw();
     }
 
+    @Override
     public void keyDown(char key, int keyCode) {
         int x = 0;
         int y = 0;
@@ -77,12 +80,14 @@ public abstract class ScrollView extends BaseView {
         verticalScroll = Applet.floor(Applet.constrain(verticalScroll + y, 0, content.height - height));
     }
 
+    @Override
     public void mouseDown(int mx, int my, boolean rmb) {
         super.mouseDown(mx, my, rmb);
         hScrollO = horizontalScroll;
         vScrollO = verticalScroll;
     }
 
+    @Override
     public void mouseDrag(int mx, int my) {
         horizontalScroll = Applet.constrain(hScrollO - (mx - mousePressX), 0, content.width - width);
         verticalScroll = Applet.constrain(vScrollO - (my - mousePressY), 0, content.height - height);

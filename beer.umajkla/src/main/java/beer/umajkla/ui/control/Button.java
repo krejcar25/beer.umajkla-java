@@ -7,6 +7,7 @@ public class Button extends UIControl {
         super(parent, sizex, sizey);
     }
 
+    @Override
     public void update() {
 
     }

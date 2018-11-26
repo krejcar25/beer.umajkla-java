@@ -1,5 +1,6 @@
 package beer.umajkla.ui;
 
+import org.jetbrains.annotations.NotNull;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
@@ -27,31 +28,37 @@ public abstract class Applet extends PApplet {
         popMatrix();
     }
 
-    public final void mouseClicked(MouseEvent event) {
+    @Override
+    public final void mouseClicked(@NotNull MouseEvent event) {
         stack.current().click(event.getX(), event.getY(), event.getButton() == RIGHT);
         click(event);
     }
 
-    public final void mousePressed(MouseEvent event) {
+    @Override
+    public final void mousePressed(@NotNull MouseEvent event) {
         stack.current().mouseDown(event.getX(), event.getY(), event.getButton() == RIGHT);
         mouseDown(event);
     }
 
-    public final void mouseReleased(MouseEvent event) {
+    @Override
+    public final void mouseReleased(@NotNull MouseEvent event) {
         stack.current().mouseUp(event.getX(), event.getY());
         mouseUp(event);
     }
 
-    public final void mouseDragged(MouseEvent event) {
+    @Override
+    public final void mouseDragged(@NotNull MouseEvent event) {
         stack.current().mouseDrag(event.getX(), event.getY());
         mouseDrag(event);
     }
 
+    @Override
     public final void mouseWheel(MouseEvent event) {
         stack.current().scroll(event);
         scroll(event);
     }
 
+    @Override
     public final void keyPressed() {
         keysPressed.add(key);
         keyCodesPressed.add(keyCode);
@@ -59,6 +66,7 @@ public abstract class Applet extends PApplet {
         stack.current().keyDown(key, keyCode);
     }
 
+    @Override
     public final void keyReleased() {
         keysPressed.removeAll(Collections.singletonList(key));
         keyCodesPressed.removeAll(Collections.singletonList(keyCode));
